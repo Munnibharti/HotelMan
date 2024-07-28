@@ -31,13 +31,13 @@ namespace HotelManagementProject.Service
             return await _staffCollection.Find(_ => true).ToListAsync();
         }
 
-        public async Task UpdateStaffAsync(string id, Staff Staffdetails)
+        public async Task UpdateStaffAsync(string id, Staff staffdetails)
         {
             var filter = Builders<Staff>.Filter.Eq(g => g.Id, id);
             var update = Builders<Staff>.Update
-                .Set(g => g.Staff_Name, Staffdetails.Staff_Name)
-                .Set(g => g.Position, Staffdetails.Position)
-                .Set(g => g.salary, Staffdetails.salary);
+                .Set(g => g.Staff_Name, staffdetails.Staff_Name)
+                .Set(g => g.Position, staffdetails.Position)
+                .Set(g => g.salary, staffdetails.salary);
               
 
             await _staffCollection.UpdateOneAsync(filter, update);
