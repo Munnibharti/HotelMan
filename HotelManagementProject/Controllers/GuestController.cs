@@ -8,9 +8,9 @@ namespace HotelManagementProject.Controllers
     {
         private readonly IGuestServices _guestService;
 
-        public GuestController(IGuestServices guestService)
+        public GuestController(IGuestServices guestServices)
         {
-            _guestService = guestService;
+            _guestService = guestServices;
         }
 
         public async Task<IActionResult> Index()
