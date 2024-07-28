@@ -24,14 +24,14 @@ namespace HotelManagementProject.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> Create(Guest guest)
+        public async Task<ActionResult> Create(Guest guests)
         {
             if (ModelState.IsValid)
             {
-                await _guestService.CreateGuestAsync(guest);
+                await _guestService.CreateGuestAsync(guests);
                 return RedirectToAction("Index");
             }
-            return View(guest);
+            return View(guests);
         }
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
@@ -45,20 +45,20 @@ namespace HotelManagementProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Guest_Name,Guest_Email,Guest_Phone,Guest_Address")] Guest guestDetails)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Guest_Name,Guest_Email,Guest_Phone,Guest_Address")] Guest guestDetail)
         {
-            if (id != guestDetails.Id)
+            if (id != guestDetail.Id)
             {
                 return BadRequest();
             }
 
             if (ModelState.IsValid)
             {
-                await _guestService.UpdateGuestAsync(id, guestDetails);
+                await _guestService.UpdateGuestAsync(id, guestDetail);
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(guestDetails);
+            return View(guestDetail);
         }
 
         [HttpGet]

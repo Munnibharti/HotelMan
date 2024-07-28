@@ -62,9 +62,9 @@ namespace HotelManagementProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string Id)
         {
-            var guest = await _roomService.GetRoomByIdAsync(id);
+            var guest = await _roomService.GetRoomByIdAsync(Id);
             if (guest == null)
             {
                 return NotFound();
