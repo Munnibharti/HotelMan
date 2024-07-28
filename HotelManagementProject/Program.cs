@@ -28,6 +28,7 @@ builder.Services.AddScoped(sp =>
 builder.Services.AddScoped<IGuestServices, GuestService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IStaffService, StaffService>();
 
 
 var app = builder.Build();

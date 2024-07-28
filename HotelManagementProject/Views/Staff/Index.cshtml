@@ -1,0 +1,44 @@
+﻿@using HotelManagementProject.Models
+@model IEnumerable<Staff>
+@{
+    ViewData["Title"] = "Staff List";
+}
+
+<h1>Staff List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Staff_Name</th>
+            <th>Position</th>
+            <th>salary</th>
+            
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var staff in Model)
+        {
+            <tr>
+                <td>@staff.Staff_Name</td>
+
+                <td>@staff.Position</td>
+                <td>@staff.salary</td>
+                
+
+                <td> @Html.ActionLink("Edit", "Edit", new { id = staff.Id })</td>  |
+                <td> @Html.ActionLink("Delete", "Delete", new { id = staff.Id })</td>|
+                <td>
+                    <a asp-action="Index">Back to List</a>
+                </td>
+
+
+
+
+            </tr>
+
+        }
+    </tbody>
+
+</table>
