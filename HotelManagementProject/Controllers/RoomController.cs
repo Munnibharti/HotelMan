@@ -23,14 +23,14 @@ namespace HotelManagementProject.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<ActionResult> Create(Room room)
+        public async Task<ActionResult> Create(Room Room)
         {
             if (ModelState.IsValid)
             {
-                await _roomService.CreateRoomAsync(room);
+                await _roomService.CreateRoomAsync(Room);
                 return RedirectToAction("Index");
             }
-            return View(room);
+            return View(Room);
         }
 
         [HttpGet]
