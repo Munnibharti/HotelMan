@@ -14,8 +14,8 @@ namespace HotelManagementProject.Controllers
         }
         public async  Task<IActionResult> Index()
         {
-           var room = await _roomService.GetRoomAsync();
-            return View(room);
+           var rooms = await _roomService.GetRoomAsync();
+            return View(rooms);
         }
         [HttpGet]
         public IActionResult Create()
@@ -34,9 +34,9 @@ namespace HotelManagementProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string Id)
         {
-            var room = await _roomService.GetRoomByIdAsync(id);
+            var room = await _roomService.GetRoomByIdAsync(Id);
             if (room == null)
             {
                 return NotFound();
