@@ -1,0 +1,54 @@
+﻿@model IEnumerable<HotelManagementProject.Models.Guest>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div>
+    <h4>Guests</h4>
+    <hr />
+    @foreach (var guest in Model)
+    {
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => guest.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => guest.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => guest.Guest_Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => guest.Guest_Name)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => guest.Guest_Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => guest.Guest_Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => guest.Guest_Phone)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => guest.Guest_Phone)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => guest.Guest_Address)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => guest.Guest_Address)
+            </dd>
+        </dl>
+        <div>
+            @Html.ActionLink("Edit", "Edit", new { id = guest.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = guest.Id })|
+            <a asp-action="Index">Back to List</a>
+        </div>
+        <hr />
+    }
+</div>

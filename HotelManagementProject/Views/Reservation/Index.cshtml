@@ -1,0 +1,49 @@
+﻿@using HotelManagementProject.Models
+@model IEnumerable<Reservation>
+@{
+    ViewData["Title"] = "Reservation List";
+}
+
+<h1>Reservation List</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>GuestId</th>
+            <th>RoomId</th>
+            <th>CheckOutDate</th>
+            <th>CheckInDate</th>
+            <th>PaymentId</th>
+            <th>TotalAmount</th>
+            
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var reservation in Model)
+        {
+            <tr>
+                <td>@reservation.GuestId</td>
+               
+                <td>@reservation.RoomId</td>
+                <td>@reservation.CheckOutDate</td>
+                <td>@reservation.CheckInDate</td>
+                <td>@reservation.PaymentId</td>
+                
+                <td>@reservation.TotalAmount</td>
+
+                <td> @Html.ActionLink("Edit", "Edit", new { id = reservation.Id })</td>  |
+                <td> @Html.ActionLink("Delete", "Delete", new { id = reservation.Id })</td>|
+                <td>
+                    <a asp-action="Index">Back to List</a>
+                </td>
+               
+                
+                
+                
+            </tr>
+
+        }
+    </tbody>
+
+</table>
