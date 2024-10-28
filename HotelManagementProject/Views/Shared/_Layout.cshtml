@@ -3,47 +3,56 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - HotelManagementProject</title>
+    <title>@ViewData["Title"] - Horizon Hotel</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/HotelManagementProject.styles.css" asp-append-version="true" />
+
+    <style>
+        /* Set background image for the entire page */
+        body {
+            background: url('@Url.Content("~/images/hotel.jpg")') no-repeat center center fixed;
+            background-size: cover; /* Ensure the background image covers the entire page */
+        }
+
+        /* Add some padding and set background color for the content */
+        .content-wrapper {
+            background-color: rgba(255, 255, 255, 0.8); /* Add transparency to content */
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for the header */
+            padding: 10px 0;
+        }
+
+        nav .navbar-brand {
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HotelManagementProject</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+                <span class="navbar-brand mb-0 h1">Horizon Hotel</span>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <!-- Content wrapper with some styling to make the text readable -->
+    <div class="container content-wrapper">
         <main role="main" class="pb-3">
-            @RenderBody()
+            @RenderBody()  <!-- This renders content from each view -->
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - HotelManagementProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    <!-- JS files for Bootstrap and jQuery -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- Render the Scripts section if defined in any page -->
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

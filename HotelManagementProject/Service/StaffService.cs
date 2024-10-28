@@ -1,4 +1,5 @@
 ﻿using HotelManagementProject.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace HotelManagementProject.Service
@@ -15,13 +16,13 @@ namespace HotelManagementProject.Service
             await _staffCollection.InsertOneAsync(Staff);
         }
 
-        public async Task DeleteStaffAsync(string id)
+        public async Task DeleteStaffAsync(ObjectId id)
         {
             var filter = Builders<Staff>.Filter.Eq(g => g.Id, id);
             await _staffCollection.DeleteOneAsync(filter);
         }
 
-        public async Task<Staff> GetStaffByIdAsync(string id)
+        public async Task<Staff> GetStaffByIdAsync(ObjectId id)
         {
             return await _staffCollection.Find(g => g.Id == id).FirstOrDefaultAsync();
         }
@@ -31,11 +32,11 @@ namespace HotelManagementProject.Service
             return await _staffCollection.Find(_ => true).ToListAsync();
         }
 
-        public async Task UpdateStaffAsync(string id, Staff staffdetails)
+        public async Task UpdateStaffAsync(ObjectId id, Staff staffdetails)
         {
             var filter = Builders<Staff>.Filter.Eq(g => g.Id, id);
             var update = Builders<Staff>.Update
-                .Set(g => g.Staff_Name, staffdetails.Staff_Name)
+                .Set(g => g.user_Name, staffdetails.user_Name)
                 .Set(g => g.Position, staffdetails.Position)
                 .Set(g => g.salary, staffdetails.salary);
               

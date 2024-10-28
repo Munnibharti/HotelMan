@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Owner Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title - Horizon Hotel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+        .dashboard-header {
+            margin-bottom: 20px;
+        }
+
+        .dashboard-links a {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+            .dashboard-links a:hover {
+                text-decoration: none;
+            }
+
+        .dashboard-links img {
+            max-width: 150px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="dashboard-header text-center">
+            <img src="~/images/owner-logo.png" alt="Owner Logo" />
+            <h1>Welcome, @ViewBag.UserName</h1>
+        </div>
+        <div class="dashboard-links">
+            <a class="btn btn-primary btn-block" asp-action="Login">Back to Login</a>
+            <a class="btn btn-secondary btn-block" asp-controller="Staff" asp-action="Create">Add Staff</a>
+            <a class="btn btn-secondary btn-block" asp-controller="Staff" asp-action="Index">See Staff Details</a>
+
+
+            <a class="btn btn-secondary btn-block" asp-controller="Staff" asp-action="Edit">Update Staff details</a>
+
+            <a class="btn btn-secondary btn-block" asp-controller="Room" asp-action="Create">Add Room</a>
+            <a class="btn btn-secondary btn-block" asp-controller="Guest" asp-action="Create">Add Guest</a>
+            <a class="btn btn-secondary btn-block" asp-controller="Reservation" asp-action="Create">Make Reservation</a>
+        
+            <a class="btn btn-secondary btn-block" asp-controller="Guest" asp-action="Index">See Guest Details</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

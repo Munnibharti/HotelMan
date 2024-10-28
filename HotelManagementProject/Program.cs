@@ -6,6 +6,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// Add session services
+builder.Services.AddDistributedMemoryCache(); // Adds a default in-memory implementation of IDistributedCache
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20); // Set the session timeout
+    options.Cookie.HttpOnly = true; // Make the session cookie HTTP only
+    options.Cookie.IsEssential = true; // Make the session cookie essential
+});
 
 // Configure MongoDB settings
 builder.Services.Configure<HotelManagementProject.Models.MongoDBSettings>(builder.Configuration.GetSection("MongoDBSettings"));
@@ -28,6 +36,11 @@ builder.Services.AddScoped(sp =>
 builder.Services.AddScoped<IGuestServices, GuestService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IStaffService, StaffService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IRoleServices, RoleService>();
+builder.Services.AddScoped<IEmailServices, EmailServices>();
+
 
 
 var app = builder.Build();
@@ -45,10 +58,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Enable session state before authorization
+app.UseSession();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Login}/{id?}");
 
 app.Run();

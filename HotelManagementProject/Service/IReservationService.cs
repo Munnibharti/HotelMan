@@ -1,14 +1,15 @@
 ﻿using HotelManagementProject.Models;
+using MongoDB.Bson;
 
 namespace HotelManagementProject.Service
 {
     public interface IReservationService
     {
-        Task<List<Reservation>> GetReservationAsync();
+       Task<List<Reservation>> GetReservationAsync();
         Task CreatereservationAsync(Reservation reservation);
-
-        Task UpdateReservationAsync(string id, Reservation reservationdetails);
-        Task<Reservation> GetReservationByIdAsync(string id);
-        Task DeleteReservationAsync(string id);
+        //Task<List<Reservation>> GetReservationsWithDetailsAsync();
+        Task UpdateReservationAsync(ObjectId id, Reservation reservationdetails);
+        Task<Reservation> GetReservationByIdAsync(ObjectId id);
+        Task DeleteReservationAsync(ObjectId id);
     }
 }

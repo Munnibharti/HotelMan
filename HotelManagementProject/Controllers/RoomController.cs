@@ -1,6 +1,7 @@
 ﻿using HotelManagementProject.Models;
 using HotelManagementProject.Service;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace HotelManagementProject.Controllers
 {
@@ -34,8 +35,9 @@ namespace HotelManagementProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(ObjectId id)
         {
+           
             var room = await _roomService.GetRoomByIdAsync(id);
             if (room == null)
             {
@@ -45,7 +47,7 @@ namespace HotelManagementProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Room_Number,Room_Type,Room_Price,Room_Status")] Room roomDetails)
+        public async Task<IActionResult> Edit(ObjectId id, [Bind("Id,Room_Number,Room_Type,Room_Price,Room_Status")] Room roomDetails)
         {
             if (id != roomDetails.Id)
             {
@@ -62,7 +64,7 @@ namespace HotelManagementProject.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(string Id)
+        public async Task<IActionResult> Delete(ObjectId Id)
         {
             var guest = await _roomService.GetRoomByIdAsync(Id);
             if (guest == null)
@@ -73,7 +75,7 @@ namespace HotelManagementProject.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(ObjectId id)
         {
             await _roomService.DeleteRoomAsync(id);
             return RedirectToAction(nameof(Index));

@@ -1,53 +1,64 @@
 ﻿@model IEnumerable<HotelManagementProject.Models.Room>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Rooms List";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Rooms List</h1>
 
-<div>
-    <h4>Room</h4>
-    <hr />
-    @foreach (var room in Model)
-    {
-        <dl class="row">
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => room.Id)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => room.Id)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => room.Room_Number)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => room.Room_Number)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => room.Room_Type)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => room.Room_Type)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => room.Room_Price)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => room.Room_Price)
-            </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => room.Room_Status)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => room.Room_Status)
-            </dd>
-        </dl>
-        <div>
-            @Html.ActionLink("Edit", "Edit", new { id = room.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = room.Id }) |
-            <a asp-action="Index">Back to List</a>
-        </div>
-        <hr />
-    }
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Available Rooms</h4>
+        <a asp-action="Create" class="btn btn-primary">Add New Room</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Room_Number)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Room_Type)</th>
+                    <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Room_Status)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Any())
+                {
+                    foreach (var room in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => room.Room_Number)</td>
+                            <td>@Html.DisplayFor(modelItem => room.Room_Type)</td>
+                            <td>
+                                @if (room.Room_Status)
+                                {
+                                    <span class="badge badge-success">Available</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Occupied</span>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@room.Id" class="btn btn-sm btn-warning">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@room.Id" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">No rooms available.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<div class="text-center mt-3">
+   
+</div>
+

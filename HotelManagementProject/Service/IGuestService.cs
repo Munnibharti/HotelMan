@@ -1,4 +1,5 @@
 ﻿using HotelManagementProject.Models;
+using MongoDB.Bson;
 
 namespace HotelManagementProject.Service
 {
@@ -6,8 +7,8 @@ namespace HotelManagementProject.Service
     {
         Task<List<Guest>> GetGuestsAsync();
         Task CreateGuestAsync(Guest guest);
-        Task UpdateGuestAsync(string id,Guest guestdetails);
-        Task<Guest>  GetGuestByIdAsync(string id);
-        Task DeleteGuestAsync(string id);
+        Task UpdateGuestAsync(ObjectId id,Guest guestdetails);
+        Task<Guest>  GetGuestByIdAsync(ObjectId id);
+        Task DeleteGuestAsync(ObjectId id);
     }
 }

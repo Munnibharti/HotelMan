@@ -1,6 +1,7 @@
 ﻿using HotelManagementProject.Models;
 using HotelManagementProject.Service;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace HotelManagementProject.Controllers
 {
@@ -26,15 +27,17 @@ namespace HotelManagementProject.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(Guest guests)
         {
-            if (ModelState.IsValid)
-            {
-                await _guestService.CreateGuestAsync(guests);
-                return RedirectToAction("Index");
-            }
+           
+                if (ModelState.IsValid)
+                {
+                    await _guestService.CreateGuestAsync(guests);
+                    return RedirectToAction("Index");
+                }
+            
             return View(guests);
         }
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(ObjectId id)
         {
             var guest = await _guestService.GetGuestByIdAsync(id);
             if (guest == null)
@@ -45,7 +48,7 @@ namespace HotelManagementProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Guest_Name,Guest_Email,Guest_Phone,Guest_Address")] Guest guestDetail)
+        public async Task<IActionResult> Edit(ObjectId id, [Bind("Id,Guest_Name,Guest_Email,Guest_Phone,Guest_Address")] Guest guestDetail)
         {
             if (id != guestDetail.Id)
             {
@@ -61,8 +64,9 @@ namespace HotelManagementProject.Controllers
             return View(guestDetail);
         }
 
+        // GET: Guests/Delete/5
         [HttpGet]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(ObjectId id)
         {
             var guest = await _guestService.GetGuestByIdAsync(id);
             if (guest == null)
@@ -72,11 +76,20 @@ namespace HotelManagementProject.Controllers
             return View(guest);
         }
 
+        // POST: Guests/DeleteConfirmed
         [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(ObjectId id)
         {
-            await _guestService.DeleteGuestAsync(id);
-            return RedirectToAction(nameof(Index));
+            var guest = await _guestService.GetGuestByIdAsync(id);
+            if (guest == null)
+            {
+                return NotFound();
+            }
+
+            await _guestService.DeleteGuestAsync(id);  // Deletes the guest
+            return RedirectToAction(nameof(Index));  // Redirects to the guest list
         }
+
+
     }
 }

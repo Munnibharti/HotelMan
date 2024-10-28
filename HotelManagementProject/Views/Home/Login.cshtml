@@ -1,0 +1,61 @@
+﻿@model HotelManagementProject.Models.LoginView
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title - Horizon Hotel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h2 class="text-center">@ViewBag.Title</h2>
+                        @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div class="form-group">
+                                @Html.LabelFor(a => a.userName, new { @class = "control-label" })
+                                @Html.TextBoxFor(a => a.userName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.userName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(a => a.Password, new { @class = "control-label" })
+                                @Html.PasswordFor(a => a.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(a => a.RoleType, new { @class = "control-label" })
+                                @Html.DropDownListFor(a => a.RoleType, new List<SelectListItem>
+                            {
+                            new SelectListItem { Text = "Owner", Value = "Owner" },
+                            new SelectListItem { Text = "Manager", Value = "Manager" },
+                            new SelectListItem { Text = "Receptionist", Value = "Receptionist" }
+                            }, "Select Role", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.RoleType, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group text-center">
+                                <input type="submit" value="Login" class="btn btn-primary" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

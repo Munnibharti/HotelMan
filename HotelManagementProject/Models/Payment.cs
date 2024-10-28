@@ -1,15 +1,18 @@
-﻿namespace HotelManagementProject.Models
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace HotelManagementProject.Models
 {
     public class Payment
     {
-        public int Id { get; set; }
+        [BsonId]
+
+
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; } = null;
 
         public string PaymentMethod { get; set; }
 
-        public string PaymentStatus { get; set; }
-
-        public DateTime PaymentDate { get; set; }
-        public decimal PaymentAmount { get; set; }
-        public string ReservationId { get; set; }
+       
     }
 }

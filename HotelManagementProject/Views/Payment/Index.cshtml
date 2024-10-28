@@ -1,0 +1,39 @@
+﻿@model IEnumerable<HotelManagementProject.Models.Payment>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div>
+    <h4>Guests</h4>
+    <hr />
+    @foreach (var payment in Model)
+    {
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => payment.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => payment.Id)
+            </dd>
+           
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => payment.PaymentMethod)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => payment.PaymentMethod)
+            </dd>
+            
+            
+        </dl>
+        <div>
+            @Html.ActionLink("Edit", "Edit", new { id = payment.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = payment.Id })|
+            <a asp-action="Index">Back to List</a>
+        </div>
+        <hr />
+    }
+</div>

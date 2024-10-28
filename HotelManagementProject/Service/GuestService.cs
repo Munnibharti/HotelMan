@@ -1,4 +1,5 @@
 ﻿using HotelManagementProject.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace HotelManagementProject.Service
@@ -16,10 +17,16 @@ namespace HotelManagementProject.Service
         }
         public async Task CreateGuestAsync(Guest guest)
         {
+            if (guest == null)
+            {
+                throw new ArgumentNullException(nameof(guest));
+            }
+            //await _reservationCollection.InsertOneAsync(reservation);
             await _guestCollection.InsertOneAsync(guest);
         }
-        public async Task UpdateGuestAsync(string id, Guest guestDetails)
+        public async Task UpdateGuestAsync(ObjectId id, Guest guestDetails)
         {
+            
             var filter = Builders<Guest>.Filter.Eq(g => g.Id, id);
             var update = Builders<Guest>.Update
                 .Set(g => g.Guest_Name, guestDetails.Guest_Name)
@@ -30,13 +37,14 @@ namespace HotelManagementProject.Service
             await _guestCollection.UpdateOneAsync(filter, update);
         }
 
-        public async Task<Guest>  GetGuestByIdAsync(string id)
+        public async Task<Guest>  GetGuestByIdAsync(ObjectId id)
         {
+
             return await _guestCollection.Find(g => g.Id == id).FirstOrDefaultAsync();
         }
        
 
-        public async Task DeleteGuestAsync(string id)
+        public async Task DeleteGuestAsync(ObjectId id)
         {
             var filter = Builders<Guest>.Filter.Eq(g => g.Id, id);
             await _guestCollection.DeleteOneAsync(filter);

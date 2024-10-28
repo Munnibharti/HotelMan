@@ -1,32 +1,77 @@
 using HotelManagementProject.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using MongoDB.Driver;
+using Microsoft.AspNetCore.Http;
 
 namespace HotelManagementProject.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IMongoCollection<Roles> _roleCollection;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IMongoDatabase database)
         {
-            _logger = logger;
+            _roleCollection = database.GetCollection<Roles>("Roles");
         }
 
-        public IActionResult Index()
+        // GET: Login Page
+        public IActionResult Login()
         {
-            return View();
+            return View(new LoginView());
         }
 
-        public IActionResult Privacy()
+        // POST: Login Action
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginView model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var filter = Builders<Roles>.Filter.Eq(g => g.userName, model.userName) &
+                             Builders<Roles>.Filter.Eq(g => g.Password, model.Password) &
+                             Builders<Roles>.Filter.Eq(g => g.RoleType, model.RoleType);
+                var user = _roleCollection.Find(filter).FirstOrDefault();
+
+                if (user != null)
+                {
+                    // Set session variables
+                    HttpContext.Session.SetString("UserName", user.userName);
+                    HttpContext.Session.SetString("RoleType", user.RoleType);
+
+                    // Redirect to dashboard based on role type
+                    return RedirectToAction("Dashboard", new { roleType = user.RoleType });
+                }
+                // If user is not found, add a model error
+                ModelState.AddModelError("", "Invalid username, password, or role type.");
+            }
+            return View(model);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        // GET: Dashboard Page
+        public IActionResult Dashboard(string roleType)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var userName = HttpContext.Session.GetString("UserName");
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(roleType))
+            {
+                ViewBag.UserName = userName;
+
+                // Redirect to specific dashboard based on role type
+                switch (roleType)
+                {
+                    case "Owner":
+                        return View("OwnerDashboard");
+                    case "Manager":
+                        return View("ManagerDashboard");
+                    case "Receptionist":
+                        return View("ReceptionistDashboard");
+                    default:
+                        return RedirectToAction("Login");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
     }
 }

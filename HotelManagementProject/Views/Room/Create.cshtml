@@ -1,53 +1,65 @@
 ﻿@model HotelManagementProject.Models.Room
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Room";
 }
 
-<h1>Create</h1>
-
-<h4>Room</h4>
+<h1 class="text-center">Create New Room</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-4">Room Details</h4>
+
+                    <!-- Begin Form -->
+                    <form asp-action="Create" class="needs-validation" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <!-- Room Number -->
+                        <div class="form-group">
+                            <label asp-for="Room_Number" class="control-label font-weight-bold">Room Number</label>
+                            <input asp-for="Room_Number" class="form-control" placeholder="Enter room number" required />
+                            <span asp-validation-for="Room_Number" class="text-danger"></span>
+                        </div>
+
+                        <!-- Room Type -->
+                        <div class="form-group">
+                            <label asp-for="Room_Type" class="control-label font-weight-bold">Room Type</label>
+                            <input asp-for="Room_Type" class="form-control" placeholder="Enter room type" required />
+                            <span asp-validation-for="Room_Type" class="text-danger"></span>
+                        </div>
+
+                        <!-- Room Status (Checkbox) -->
+                        <div class="form-group form-check mb-4">
+                            <input class="form-check-input" asp-for="Room_Status" id="Room_Status" />
+                            <label class="form-check-label" asp-for="Room_Status">
+                                Is the room available?
+                            </label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-block">Create Room</button>
+                        </div>
+                    </form>
+                    <!-- End Form -->
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Room_Number" class="control-label"></label>
-                <input asp-for="Room_Number" class="form-control" />
-                <span asp-validation-for="Room_Number" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Room_Type" class="control-label"></label>
-                <input asp-for="Room_Type" class="form-control" />
-                <span asp-validation-for="Room_Type" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Room_Price" class="control-label"></label>
-                <input asp-for="Room_Price" class="form-control" />
-                <span asp-validation-for="Room_Price" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Room_Status" /> @Html.DisplayNameFor(model => model.Room_Status)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

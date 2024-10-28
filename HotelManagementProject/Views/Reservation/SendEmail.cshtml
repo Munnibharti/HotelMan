@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Send Email";
+    var guestEmail = ViewBag.GuestEmail as string;
+    var checkInDate = ViewBag.CheckInDate as string;
+    var checkOutDate = ViewBag.CheckOutDate as string;
+    var roomNumber = ViewBag.RoomNumber as string;
+    var paymentMethod = ViewBag.PaymentMethod as string;
+    var totalAmount = ViewBag.TotalAmount as string;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Email - @ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <script type="text/javascript">
+        window.onload = function () {
+            // Assign Razor variables to JavaScript variables
+            var guestEmail = '@guestEmail';
+            var checkInDate = '@checkInDate';
+            var checkOutDate = '@checkOutDate';
+            var roomNumber = '@roomNumber';
+            var paymentMethod = '@paymentMethod';
+            var totalAmount = '@totalAmount';
+
+            // Construct the mailto link with interpolated values
+            var mailtoLink = 'mailto:' + guestEmail +
+                '?subject=Reservation Created' +
+                '&body=Dear Guest,%0D%0A%0D%0A' +
+                'We are pleased to inform you that your reservation has been successfully created.%0D%0A%0D%0A' +
+                'Details of your reservation are as follows:%0D%0A' +
+                'Check-In Date: ' + checkInDate + '%0D%0A' +
+                'Check-Out Date: ' + checkOutDate + '%0D%0A' +
+                'Room Number: ' + roomNumber + '%0D%0A' +
+                'Payment Method: ' + paymentMethod + '%0D%0A' +
+                'Total Amount: ' + totalAmount + '%0D%0A%0D%0A' +
+                'Thank you for choosing Horizon Hotel. We look forward to welcoming you.%0D%0A%0D%0A' +
+                'Best Regards,%0D%0A' +
+                'Horizon Hotel';
+
+            // Open the mail client
+            window.location.href = mailtoLink;
+
+            // Redirect to the Index page after 5 seconds
+            setTimeout(function () {
+                window.location.href = '@Url.Action("Index", "Reservation")';
+            }, 5000); // 5000 milliseconds = 5 seconds
+        };
+    </script>
+</head>
+<body class="bg-light text-center">
+    <div class="container mt-5">
+        <h1 class="display-4">Sending Email...</h1>
+        <p class="lead">Please wait while we open your email client.</p>
+        <p>If your email client did not open, <a href="mailto:@guestEmail?subject=Reservation&body=Your%20reservation%20has%20been%20created.%20Thank%20you!" class="btn btn-primary">click here</a>.</p>
+        <div class="spinner-border text-primary mt-3" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        <p class="mt-3 text-muted">You will be redirected shortly.</p>
+    </div>
+</body>
+</html>
